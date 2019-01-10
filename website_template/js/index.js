@@ -1,4 +1,8 @@
 var tool = {
+    init: function(){
+        tool.tabs();
+        tool.callMe();
+    },
     tabs:function () {
         $("li","#tabs_nav").click(function () {
             $("li","#tabs_nav").removeClass("active");
@@ -7,6 +11,9 @@ var tool = {
             $("section","#tabs_content").addClass('none').removeClass('show');
             $("section","#tabs_content").eq(index).addClass('show').removeClass('none');
             $("#recruit_model").addClass('none');
+        })
+        $(".range_btn").click(function(){
+            $(".contact_pop_model").attr('data-animation','layerFadeIn');
         })
     },
     callMe: function(){
@@ -57,12 +64,5 @@ var tool = {
             }, 3000);
         }
         autoPlay();
-    }
-};
-tool.tabs();
-tool.callMe();
-// tool.silde();
-var bindEvent = {
-
-
+    },
 };
