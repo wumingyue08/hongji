@@ -1,8 +1,4 @@
 var tool = {
-    init: function(){
-        tool.tabs();
-        tool.callMe();
-    },
     tabs:function () {
         $("li","#tabs_nav").click(function () {
             $("li","#tabs_nav").removeClass("active");
@@ -11,9 +7,12 @@ var tool = {
             $("section","#tabs_content").addClass('none').removeClass('show');
             $("section","#tabs_content").eq(index).addClass('show').removeClass('none');
             $("#recruit_model").addClass('none');
-        })
+        });
         $(".range_btn").click(function(){
-            $(".contact_pop_model").attr('data-animation','layerFadeIn');
+            $("#contact_pop_model").removeClasss('none');
+        });
+        $("#contact_pop_model").click(function(){
+            $("#contact_pop_model").addClass('none');
         })
     },
     callMe: function(){
@@ -25,11 +24,12 @@ var tool = {
     },
     silde: function () {
         //补充第一张图片的节点
-        var firstImg = '<li style="position:absolute"><img src="../img/index/slide1.png"></li>';
+        var firstImg = '<li style="position:absolute"><img src="../img/index/slide_1.jpg"></li>';
         $('#ul ul').append(firstImg);
-        $('#ul').width($('#ul li').length * $('#ul img').width());
-        var i = 0,imgW = $('#ul img').width(),timer;
+        var i = 0,timer;
         function moveImg() {
+            $('#ul').width($('#ul li').length * $('#ul li').width());
+            var imgW = $('#ul li').width();
             if (i == $('#ul li').length) {
                 $('#ul').css({
                     left: 0
@@ -65,4 +65,85 @@ var tool = {
         }
         autoPlay();
     },
+
 };
+tool.tabs();
+tool.callMe();
+tool.silde();
+var bindEvent = {
+    initIndex:function(){
+        if(document.body.clientWidth < 922){
+            $("li","#ul").css("width","922px");
+        }else{
+            $("li","#ul").css("width",document.body.clientWidth+"px");
+        }
+        var width_m = $("#tabs_content").width();
+            $(".range1").width(width_m+"px");
+            $(".range2").width(width_m+"px");
+    },
+    bindEvent: function(){
+        $("#next").click(function(){
+            var width_m = $("#tabs_content").width();
+            $(".range1").width(width_m+"px");
+            $(".range2").width(width_m+"px");
+            var left = $(".range1").width()
+            $("#top_one").removeClass("none");
+            $("#next").addClass("none");
+            $("#slide").animate({marginLeft:(-left)+"px"});
+           
+        });
+        $("#top_one").click(function(){
+            var width_m = $("#tabs_content").width();
+            $(".range2").width(width_m+"px");
+            $(".range1").width(width_m+"px");
+            $("#top_one").addClass("none");
+            $("#next").removeClass("none");
+            $("#slide").animate({marginLeft:"0px"});
+           
+        });
+        $("#next_r").click(function(){
+            var width_m = $("#tabs_content").width();
+            $(".range1").width(width_m+"px");
+            $(".range2").width(width_m+"px");
+            var left = $(".range1").width()
+            $("#top_one_r").removeClass("none");
+            $("#next_r").addClass("none");
+            $("#slide_r").animate({marginLeft:(-left)+"px"});
+           
+        });
+        $("#top_one_r").click(function(){
+            var width_m = $("#tabs_content").width();
+            $(".range2").width(width_m+"px");
+            $(".range1").width(width_m+"px");
+            $("#top_one_r").addClass("none");
+            $("#next_r").removeClass("none");
+            $("#slide_r").animate({marginLeft:"0px"});
+           
+        });
+        $(".to_call").click(function(){
+            $(".cd-close").click();
+            $("#callMe").click();
+        })
+        $(".range_btn").click(function(){
+            $("#callMe").click();
+        })
+        $(".more").click(function(){
+            $(".cd-close").click();
+            $("li",".tabs_nav").eq(1).click();
+        })
+    }
+
+};
+bindEvent.initIndex();
+bindEvent.bindEvent();
+window.onresize=function(){
+    console.log(document.body.clientWidth );
+    if(document.body.clientWidth < 922){
+        $("li","#ul").css("width","922px");
+    }else{
+        $("li","#ul").css("width",document.body.clientWidth+"px");
+    }
+    var width_m = $("#tabs_content").width();
+            $(".range1").width(width_m+"px");
+            $(".range2").width(width_m+"px");
+}
