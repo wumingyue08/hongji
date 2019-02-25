@@ -1,32 +1,47 @@
 var tool = {
-    tabs:function () {
-        $("li","#tabs_nav").click(function () {
-            $("li","#tabs_nav").removeClass("active");
+    init: function () {
+        tool.tabs();
+        tool.callMe();
+        tool.silde();
+        bindEvent.initIndex();
+        bindEvent.bindEvent();
+    },
+    tabs: function () {
+        $("li", "#tabs_nav").click(function () {
+            $("li", "#tabs_nav").removeClass("active");
             $(this).addClass("active");
             var index = $(this).index();
-            $("section","#tabs_content").addClass('none').removeClass('show');
-            $("section","#tabs_content").eq(index).addClass('show').removeClass('none');
+            $("section", "#tabs_content").addClass('none').removeClass('show');
+            $("section", "#tabs_content").eq(index).addClass('show').removeClass('none');
             $("#recruit_model").addClass('none');
         });
-        $(".range_btn").click(function(){
-            $("#contact_pop_model").removeClasss('none');
+        $(".range_btn").click(function () {
+            $("#contact_pop_model").removeClass('none');
+            $("#contact_de").addClass('rollIn');
         });
-        $("#contact_pop_model").click(function(){
-            $("#contact_pop_model").addClass('none');
+        $("#contact_pop_model").click(function () {
+            $("#contact_de").removeClass('rollIn');
+            $("#contact_de").addClass('hide-rollIn');
+            setTimeout(function () {
+                $("#contact_pop_model").addClass('none');
+                $("#contact_de").removeClass('hide-rollIn');
+            }, 300)
         })
     },
-    callMe: function(){
+    callMe: function () {
         $("#callMe").click(function () {
-            $("li","#tabs_nav").removeClass("active");
-            $("section","#tabs_content").addClass('none').removeClass('show');
+            $("li", "#tabs_nav").removeClass("active");
+            $("section", "#tabs_content").addClass('none').removeClass('show');
             $("#recruit_model").removeClass('none');
         })
     },
     silde: function () {
         //补充第一张图片的节点
-        var firstImg = '<li style="position:absolute"><img src="../img/index/slide_1.jpg"></li>';
+        var firstImg = '<li style="position:absolute"><img src="../img/index/slide_2.jpg"></li>';
         $('#ul ul').append(firstImg);
-        var i = 0,timer;
+        var i = 0,
+            timer;
+
         function moveImg() {
             $('#ul').width($('#ul li').length * $('#ul li').width());
             var imgW = $('#ul li').width();
@@ -57,6 +72,7 @@ var tool = {
             i = $(this).index();
             moveImg();
         });
+
         function autoPlay() {
             timer = setInterval(function () {
                 i++;
@@ -65,85 +81,91 @@ var tool = {
         }
         autoPlay();
     },
-
+    //2.78 id="dom"
+    compete: function () {
+        var width = document.body.clientWidth;
+        var height = width / 2.78;
+        $("dom").css('height', height + 'px');
+    }
 };
-tool.tabs();
-tool.callMe();
-tool.silde();
 var bindEvent = {
-    initIndex:function(){
-        if(document.body.clientWidth < 922){
-            $("li","#ul").css("width","922px");
-        }else{
-            $("li","#ul").css("width",document.body.clientWidth+"px");
+    initIndex: function () {
+        if (document.body.clientWidth < 922) {
+            $("li", "#ul").css("width", "922px");
+        } else {
+            $("li", "#ul").css("width", document.body.clientWidth + "px");
         }
         var width_m = $("#tabs_content").width();
-            $(".range1").width(width_m+"px");
-            $(".range2").width(width_m+"px");
+        $(".range1").width(width_m + "px");
+        $(".range2").width(width_m + "px");
     },
-    bindEvent: function(){
-        $("#next").click(function(){
+    bindEvent: function () {
+        $("#next").click(function () {
             var width_m = $("#tabs_content").width();
-            $(".range1").width(width_m+"px");
-            $(".range2").width(width_m+"px");
+            $(".range1").width(width_m + "px");
+            $(".range2").width(width_m + "px");
             var left = $(".range1").width()
             $("#top_one").removeClass("none");
             $("#next").addClass("none");
-            $("#slide").animate({marginLeft:(-left)+"px"});
-           
+            $("#slide").animate({
+                marginLeft: (-left) + "px"
+            });
+
         });
-        $("#top_one").click(function(){
+        $("#top_one").click(function () {
             var width_m = $("#tabs_content").width();
-            $(".range2").width(width_m+"px");
-            $(".range1").width(width_m+"px");
+            $(".range2").width(width_m + "px");
+            $(".range1").width(width_m + "px");
             $("#top_one").addClass("none");
             $("#next").removeClass("none");
-            $("#slide").animate({marginLeft:"0px"});
-           
+            $("#slide").animate({
+                marginLeft: "0px"
+            });
+
         });
-        $("#next_r").click(function(){
+        $("#next_r").click(function () {
             var width_m = $("#tabs_content").width();
-            $(".range1").width(width_m+"px");
-            $(".range2").width(width_m+"px");
+            $(".range1").width(width_m + "px");
+            $(".range2").width(width_m + "px");
             var left = $(".range1").width()
             $("#top_one_r").removeClass("none");
             $("#next_r").addClass("none");
-            $("#slide_r").animate({marginLeft:(-left)+"px"});
-           
+            $("#slide_r").animate({
+                marginLeft: (-left) + "px"
+            });
+
         });
-        $("#top_one_r").click(function(){
+        $("#top_one_r").click(function () {
             var width_m = $("#tabs_content").width();
-            $(".range2").width(width_m+"px");
-            $(".range1").width(width_m+"px");
+            $(".range2").width(width_m + "px");
+            $(".range1").width(width_m + "px");
             $("#top_one_r").addClass("none");
             $("#next_r").removeClass("none");
-            $("#slide_r").animate({marginLeft:"0px"});
-           
+            $("#slide_r").animate({
+                marginLeft: "0px"
+            });
+
         });
-        $(".to_call").click(function(){
+        $(".to_call").click(function () {
             $(".cd-close").click();
             $("#callMe").click();
         })
-        $(".range_btn").click(function(){
-            $("#callMe").click();
-        })
-        $(".more").click(function(){
+        $(".more").click(function () {
             $(".cd-close").click();
-            $("li",".tabs_nav").eq(1).click();
+            $("li", ".tabs_nav").eq(1).click();
         })
     }
 
 };
-bindEvent.initIndex();
-bindEvent.bindEvent();
-window.onresize=function(){
-    console.log(document.body.clientWidth );
-    if(document.body.clientWidth < 922){
-        $("li","#ul").css("width","922px");
-    }else{
-        $("li","#ul").css("width",document.body.clientWidth+"px");
+window.onresize = function () {
+    if (document.body.clientWidth < 922) {
+        $("li", "#ul").css("width", "922px");
+    } else {
+        $("li", "#ul").css("width", document.body.clientWidth + "px");
     }
     var width_m = $("#tabs_content").width();
-            $(".range1").width(width_m+"px");
-            $(".range2").width(width_m+"px");
+    $(".range1").width(width_m + "px");
+    $(".range2").width(width_m + "px");
+    index.compete()
 }
+tool.init();
