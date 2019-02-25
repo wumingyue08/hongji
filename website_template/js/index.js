@@ -2,9 +2,10 @@ var tool = {
     init: function () {
         tool.tabs();
         tool.callMe();
-        tool.silde();
+        // tool.silde();
         bindEvent.initIndex();
         bindEvent.bindEvent();
+        tool.compete();
     },
     tabs: function () {
         $("li", "#tabs_nav").click(function () {
@@ -84,8 +85,15 @@ var tool = {
     //2.78 id="dom"
     compete: function () {
         var width = document.body.clientWidth;
-        var height = width / 2.78;
-        $("dom").css('height', height + 'px');
+        var height =  width / 4.78; //width / 2.78;
+        if(width >1151){
+            $(".dom").css('height', height + 'px');
+            $(".slide_model").css('height', height + 'px');
+            $(".header_img").css('height', height + 'px');
+            $("img",".header_img").css('height', height + 'px');
+            $(".content_bg").css('height', height*1.3125 + 'px');
+        }
+        
     }
 };
 var bindEvent = {
@@ -166,6 +174,6 @@ window.onresize = function () {
     var width_m = $("#tabs_content").width();
     $(".range1").width(width_m + "px");
     $(".range2").width(width_m + "px");
-    index.compete()
+    tool.compete();
 }
 tool.init();
